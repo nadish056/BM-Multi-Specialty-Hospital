@@ -19,30 +19,31 @@ exports.login = (req, res) => {
         return res.status(400).json({ error: 'Email and password are required.' });
     }
 
-    password = String(password).trim();
-
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) {
         console.error('FATAL: JWT_SECRET environment variable is missing.');
         return res.status(500).json({ error: 'Server authentication configuration error.' });
     }
 
-    email = email.trim().toLowerCase();
+    const inputEmail = String(email).trim().toLowerCase();
+    const inputPassword = String(password).trim();
 
-    db.get(`SELECT * FROM admins WHERE email = ?`, [email], async (err, admin) => {
-        if (err || !admin) {
-            return res.status(401).json({ error: 'Invalid email or password.' });
-        }
+    // Check directly against env variables — works on Netlify serverless (no SQLite write needed)
+    const adminEmail = (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
+    const adminPassword = (process.env.ADMIN_PASSWORD || '').trim();
 
-        const match = await bcrypt.compare(password, admin.password);
-        if (!match) {
-            return res.status(401).json({ error: 'Invalid email or password.' });
-        }
+    if (!adminEmail || !adminPassword) {
+        return res.status(500).json({ error: 'Admin credentials not configured on server.' });
+    }
 
-        const token = jwt.sign({ id: admin.id, email: admin.email }, jwtSecret, { expiresIn: '24h' });
-        res.json({ success: true, token, email: admin.email });
-    });
+    if (inputEmail !== adminEmail || inputPassword !== adminPassword) {
+        return res.status(401).json({ error: 'Invalid email or password.' });
+    }
+
+    const token = jwt.sign({ id: 1, email: adminEmail }, jwtSecret, { expiresIn: '24h' });
+    res.json({ success: true, token, email: adminEmail });
 };
+
 
 /**
  * Dashboard Statistics
