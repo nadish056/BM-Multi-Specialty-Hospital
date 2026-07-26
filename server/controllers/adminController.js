@@ -12,41 +12,37 @@ const dbRun = (query, params = []) => new Promise((resolve, reject) => {
     db.run(query, params, function(err) { err ? reject(err) : resolve(this); });
 });
 
-exports.login = (req, res) => {
-    let { email, password } = req.body;
+exports.login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password are required.' });
+        }
+        const inputEmail = String(email).trim().toLowerCase();
+        const inputPassword = String(password).trim();
 
-    if (!email || !password) {
-        return res.status(400).json({ error: 'Email and password are required.' });
+        const admin = await dbGet(`SELECT * FROM admins WHERE email = ?`, [inputEmail]);
+        if (!admin) {
+            return res.status(401).json({ error: 'Invalid email or password.' });
+        }
+
+        const match = await bcrypt.compare(inputPassword, admin.password);
+        if (!match) {
+            return res.status(401).json({ error: 'Invalid email or password.' });
+        }
+
+        const jwtSecret = process.env.JWT_SECRET;
+        if (!jwtSecret) {
+            console.error('JWT_SECRET is not set in .env — refusing to issue token.');
+            return res.status(500).json({ error: 'Server misconfiguration.' });
+        }
+
+        const token = jwt.sign({ id: admin.id, email: admin.email }, jwtSecret, { expiresIn: '24h' });
+        res.json({ success: true, token, email: admin.email });
+    } catch (err) {
+        console.error('Login error:', err);
+        res.status(500).json({ error: 'Login failed due to a server error.' });
     }
-
-    const jwtSecret = process.env.JWT_SECRET || 'super_secret_jwt';
-
-    const inputEmail = String(email).trim().toLowerCase();
-    const inputPassword = String(password).trim();
-
-    // Accepted email aliases
-    const envEmail = (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
-    const validEmails = new Set([
-        'nadish',
-        'nadish@hospital.com',
-        'admin@hospital.com',
-        envEmail
-    ].filter(Boolean));
-
-    // Accepted password aliases
-    const envPassword = (process.env.ADMIN_PASSWORD || '').trim();
-    const validPasswords = new Set([
-        'nadish@1234',
-        'Nadish@Hospital2026',
-        envPassword
-    ].filter(Boolean));
-
-    if (!validEmails.has(inputEmail) || !validPasswords.has(inputPassword)) {
-        return res.status(401).json({ error: 'Invalid email or password.' });
-    }
-
-    const token = jwt.sign({ id: 1, email: inputEmail }, jwtSecret, { expiresIn: '24h' });
-    res.json({ success: true, token, email: inputEmail });
 };
 
 
