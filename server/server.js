@@ -9,6 +9,9 @@ const db = require('./database/init');
 
 const app = express();
 
+// Trust proxy for reverse proxies (Render, Heroku, Nginx)
+app.set('trust proxy', 1);
+
 // Security Middlewares
 app.use(helmet({
     contentSecurityPolicy: false // disabled for simple setup with local static files
