@@ -132,10 +132,15 @@ exports.enhanceSymptoms = async (req, res) => {
         return res.status(400).json({ error: 'Symptoms text is required.' });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    // Local smart formatter fallback if API key is missing or calls fail
+    const fallbackFormat = (text) => {
+        const lines = text.split(/\r?\n|,|\./).map(s => s.trim()).filter(Boolean);
+        if (lines.length === 0) return text;
+        return "Patient Reported Symptoms:\n" + lines.map(l => `• ${l.charAt(0).toUpperCase() + l.slice(1)}`).join('\n');
+    };
 
     if (!apiKey) {
-        return res.status(500).json({ error: 'Gemini API Key missing.' });
+        return res.json({ enhanced_text: fallbackFormat(raw_symptoms) });
     }
 
     const PROMPT = `
@@ -171,6 +176,6 @@ Output ONLY the enhanced summary text, nothing else.
         }
     }
 
-    console.error('All Gemini model requests failed for enhance symptoms:', JSON.stringify(lastError, null, 2));
-    return res.status(500).json({ error: 'Failed to enhance symptoms with AI.' });
+    console.warn('Gemini model request fallback triggered for symptoms:', JSON.stringify(lastError, null, 2));
+    return res.json({ enhanced_text: fallbackFormat(raw_symptoms) });
 };
