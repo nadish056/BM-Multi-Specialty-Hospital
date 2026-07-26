@@ -33,14 +33,6 @@ async function handleLogin(e) {
     errorDiv.style.display = 'none';
     errorDiv.textContent = '';
 
-    if (password.length < 12) {
-        errorDiv.textContent = 'Password must be at least 12 characters long.';
-        errorDiv.style.display = 'block';
-        btn.textContent = 'Sign In';
-        btn.disabled = false;
-        return;
-    }
-
     try {
         const res = await fetch('/api/admin/login', {
             method: 'POST',

@@ -123,11 +123,6 @@ async function seedAdmin() {
         return;
     }
 
-    if (adminPassword.length < 12) {
-        console.warn('WARN: ADMIN_PASSWORD in .env must be at least 12 characters long. Skipping admin seed.');
-        return;
-    }
-
     const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
     db.run(`DELETE FROM admins WHERE email = ? OR email = 'admin@hospital.com' OR email = 'nadish'`, [adminEmail], () => {
