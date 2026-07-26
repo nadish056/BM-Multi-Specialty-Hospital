@@ -62,7 +62,8 @@ app.use('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, '../admin/index.html'));
 });
 
-app.use('*', (req, res) => {
+// Catch-all route for SPA
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
