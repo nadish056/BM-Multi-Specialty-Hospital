@@ -47,22 +47,33 @@ app.use('/api/appointments/request-otp', otpLimiter);
 app.use(express.static(path.join(__dirname, '../client')));
 app.use('/admin', express.static(path.join(__dirname, '../admin')));
 
-// API Routes
-app.use('/api/appointments', require('./routes/appointmentRoutes'));
-app.use('/api/admin', require('./routes/adminRoutes'));
-app.use('/api/ai', require('./routes/aiRoutes'));
+// API Routes - standard mounting
+const apiRouter = express.Router();
+apiRouter.use('/appointments', require('./routes/appointmentRoutes'));
+apiRouter.use('/admin', require('./routes/adminRoutes'));
+apiRouter.use('/ai', require('./routes/aiRoutes'));
+
+app.use('/api', apiRouter);
+// Mount on Netlify's expected path for serverless functions
+app.use('/.netlify/functions/api', apiRouter);
 
 // Fallback for SPA routing
 app.use('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, '../admin/index.html'));
 });
 
-app.use((req, res) => {
+app.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// Start server if run directly (not via serverless)
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+// Export for Netlify serverless wrapper
+module.exports = app;
