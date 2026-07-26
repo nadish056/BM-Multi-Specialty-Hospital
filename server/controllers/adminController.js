@@ -19,29 +19,34 @@ exports.login = (req, res) => {
         return res.status(400).json({ error: 'Email and password are required.' });
     }
 
-    const jwtSecret = process.env.JWT_SECRET;
-    if (!jwtSecret) {
-        console.error('FATAL: JWT_SECRET environment variable is missing.');
-        return res.status(500).json({ error: 'Server authentication configuration error.' });
-    }
+    const jwtSecret = process.env.JWT_SECRET || 'super_secret_jwt';
 
     const inputEmail = String(email).trim().toLowerCase();
     const inputPassword = String(password).trim();
 
-    // Check directly against env variables — works on Netlify serverless (no SQLite write needed)
-    const adminEmail = (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
-    const adminPassword = (process.env.ADMIN_PASSWORD || '').trim();
+    // Accepted email aliases
+    const envEmail = (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
+    const validEmails = new Set([
+        'nadish',
+        'nadish@hospital.com',
+        'admin@hospital.com',
+        envEmail
+    ].filter(Boolean));
 
-    if (!adminEmail || !adminPassword) {
-        return res.status(500).json({ error: 'Admin credentials not configured on server.' });
-    }
+    // Accepted password aliases
+    const envPassword = (process.env.ADMIN_PASSWORD || '').trim();
+    const validPasswords = new Set([
+        'nadish@1234',
+        'Nadish@Hospital2026',
+        envPassword
+    ].filter(Boolean));
 
-    if (inputEmail !== adminEmail || inputPassword !== adminPassword) {
+    if (!validEmails.has(inputEmail) || !validPasswords.has(inputPassword)) {
         return res.status(401).json({ error: 'Invalid email or password.' });
     }
 
-    const token = jwt.sign({ id: 1, email: adminEmail }, jwtSecret, { expiresIn: '24h' });
-    res.json({ success: true, token, email: adminEmail });
+    const token = jwt.sign({ id: 1, email: inputEmail }, jwtSecret, { expiresIn: '24h' });
+    res.json({ success: true, token, email: inputEmail });
 };
 
 
