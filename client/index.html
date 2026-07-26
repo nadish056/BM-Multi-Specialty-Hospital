@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BM Multi Speciality Hospital — World-Class Healthcare</title>
+    <meta name="description"
+        content="BM Multi Speciality Hospital offers premium healthcare across 16+ specialities with 35+ expert doctors. Book your consultation online.">
+
+    <!-- Fonts: Cormorant Garamond + Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Loading Screen -->
+    <div id="luxury-loader" class="luxury-loader">
+        <div class="loader-logo-ring">
+            <div class="loader-inner-ring"></div>
+            <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+                alt="BM Logo" class="loader-logo-img">
+        </div>
+        <div class="loader-ecg">
+            <svg viewBox="0 0 200 50" class="loader-ecg-svg">
+                <polyline points="0,25 50,25 60,10 70,40 80,25 200,25" fill="none" stroke="var(--gold)" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+     LUXURY BACKGROUND LAYERS
+     ══════════════════════════════════════════════ -->
+    <div class="bg-layer" aria-hidden="true">
+        <div class="bg-radial bg-radial-1"></div>
+        <div class="bg-radial bg-radial-2"></div>
+        <div class="bg-radial bg-radial-3"></div>
+        <div class="bg-noise"></div>
+        <div class="bg-pattern"></div>
+        <div class="bg-vignette"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+     FLOATING NAVIGATION
+     ══════════════════════════════════════════════ -->
+    <header class="nav-wrapper" role="banner">
+        <nav class="nav-float" role="navigation" aria-label="Main navigation">
+            <!-- Logo -->
+            <a href="#hero" class="nav-logo" aria-label="BM Hospital Home">
+                <div class="logo-ring" aria-hidden="true">
+                    <img src="/assets/logo.png" alt="BM Hospital Logo" class="logo-img-inner">
+                </div>
+                <div class="nav-brand">
+                    <span class="nav-brand-name">BM Hospital</span>
+                    <span class="nav-brand-tagline">Care Beyond Boundaries</span>
+                </div>
+            </a>
+
+            <!-- Links -->
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="#hero" class="nav-link" role="menuitem">Home</a></li>
+                <li role="none"><a href="#departments" class="nav-link" role="menuitem">Departments</a></li>
+                <li role="none"><a href="#doctors" class="nav-link" role="menuitem">Specialists</a></li>
+                <li role="none"><a href="#booking" class="nav-link" role="menuitem">Book Appointment</a></li>
+            </ul>
+
+            <!-- Right Actions -->
+            <div class="nav-actions">
+                <a href="tel:+914426001234" class="emergency-btn" aria-label="Call Emergency Services"
+                    title="Call Emergency Line: +91 44-2600-1234">
+                    <span class="emergency-dot" aria-hidden="true"></span>
+                    Emergency
+                </a>
+                <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+                    <span class="theme-icon" aria-hidden="true">☀</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ══════════════════════════════════════════════
+     HERO SECTION
+     ══════════════════════════════════════════════ -->
+    <main>
+        <section id="hero" class="hero-section" aria-label="Welcome to BM Hospital">
+            <div class="hero-bg-ecg" aria-hidden="true">
+                <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+                    <polyline points="0,50 400,50 430,20 460,80 490,50 1000,50" fill="none" stroke="var(--gold)"
+                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <div class="hero-inner">
+
+                <!-- Left: Copy -->
+                <div class="hero-copy" data-animate="fade-up">
+                    <div class="hero-badge">
+                        <span class="hero-badge-dot" aria-hidden="true"></span>
+                        Serving Excellence Since 1998
+                    </div>
+                    <h1 class="hero-heading">
+                        Advanced Medical Care,<br>
+                        <em class="hero-heading-gold">Closer to You</em>
+                    </h1>
+                    <p class="hero-description">
+                        BM Multi Speciality Hospital delivers world-class healthcare across
+                        <strong>16+ specialities</strong> with <strong>35+ expert consultants</strong>.
+                        Precision diagnostics. Compassionate care.<br><br>
+                        <em
+                            style="color: var(--gold); font-size: 1.1rem; display: block; margin-top: 0.5rem; letter-spacing: 0.02em;">"You
+                            are in safe hands. We are here for you, don't worry."</em>
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#booking" class="btn-primary">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" aria-hidden="true">
+                                <rect x="3" y="4" width="18" height="18" rx="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                            </svg>
+                            Book Appointment
+                        </a>
+                        <a href="#doctors" class="btn-secondary">
+                            Meet Our Specialists
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" aria-hidden="true">
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                                <polyline points="12 5 19 12 12 19" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Stats Row -->
+                    <div class="hero-stats" role="list" aria-label="Hospital statistics">
+                        <div class="stat-item" role="listitem">
+                            <span class="stat-number">35+</span>
+                            <span class="stat-label">Specialists</span>
+                        </div>
+                        <div class="stat-divider" aria-hidden="true"></div>
+                        <div class="stat-item" role="listitem">
+                            <span class="stat-number">16+</span>
+                            <span class="stat-label">Departments</span>
+                        </div>
+                        <div class="stat-divider" aria-hidden="true"></div>
+                        <div class="stat-item" role="listitem">
+                            <span class="stat-number">28yrs</span>
+                            <span class="stat-label">Excellence</span>
+                        </div>
+                        <div class="stat-divider" aria-hidden="true"></div>
+                        <div class="stat-item" role="listitem">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Emergency</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Premium Card -->
+                <div class="hero-card-wrap" data-animate="fade-left">
+                    <div class="hero-card lux-card">
+                        <div class="hero-card-logo-ring">
+                            <img src="/assets/logo.png" alt="BM Hospital Emblem" class="hero-logo-img">
+                        </div>
+                        <h2 class="hero-card-name">BM Multi Speciality</h2>
+                        <p class="hero-card-sub">24 / 7 Emergency Care &amp; Advanced Diagnostics</p>
+                        <div class="hero-card-divider" aria-hidden="true"></div>
+                        <div class="hero-card-features">
+                            <div class="hero-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5" aria-hidden="true">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                                NABH Accredited Facility
+                            </div>
+                            <div class="hero-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5" aria-hidden="true">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                                Advanced Robotics &amp; AI Diagnostics
+                            </div>
+                            <div class="hero-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5" aria-hidden="true">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                                International Patient Services
+                            </div>
+                            <div class="hero-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5" aria-hidden="true">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                                Cashless Insurance Support
+                            </div>
+                        </div>
+                        <!-- Heartbeat line -->
+                        <div class="heartbeat-line" aria-hidden="true">
+                            <svg viewBox="0 0 200 50" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polyline
+                                    points="0,25 30,25 40,5 50,45 60,25 80,25 90,10 100,40 110,25 170,25 180,15 190,35 200,25" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════
+     DEPARTMENTS SECTION
+     ══════════════════════════════════════════════ -->
+        <section id="departments" class="lux-section" aria-labelledby="dept-heading">
+            <div class="lux-section-inner">
+                <div class="section-label" aria-hidden="true">Our Specialities</div>
+                <h2 id="dept-heading" class="section-heading">World-Class<br><em>Medical Departments</em></h2>
+                <p class="section-sub">16 specialized centers equipped with state-of-the-art diagnostics and
+                    internationally trained physicians</p>
+                <div id="departments-grid" class="departments-grid" role="list" aria-label="Hospital departments">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════
+     DOCTORS SECTION
+     ══════════════════════════════════════════════ -->
+        <section id="doctors" class="lux-section lux-section-alt" aria-labelledby="doc-heading">
+            <div class="lux-section-inner">
+                <div class="section-label" aria-hidden="true">Our Team</div>
+                <h2 id="doc-heading" class="section-heading">Meet Our<br><em>Medical Specialists</em></h2>
+                <p class="section-sub">Distinguished consultants with decades of clinical expertise dedicated to your
+                    health and recovery</p>
+
+                <!-- Filters -->
+                <div class="doctor-filters" role="search" aria-label="Filter doctors">
+                    <div class="filter-select-wrap">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" aria-hidden="true">
+                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                        </svg>
+                        <select id="doctor-dept-filter" class="lux-select" aria-label="Filter by department">
+                            <option value="ALL">All Departments</option>
+                        </select>
+                    </div>
+                    <div class="filter-search-wrap">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <input type="text" id="doctor-search-input" class="lux-search"
+                            placeholder="Search by doctor name…" aria-label="Search doctors by name">
+                    </div>
+                </div>
+
+                <div id="doctors-grid" class="doctors-grid" role="list" aria-label="List of doctors">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════
+     BOOKING SECTION — SPLIT LAYOUT
+     ══════════════════════════════════════════════ -->
+        <section id="booking" class="lux-section" aria-labelledby="book-heading">
+            <div class="lux-section-inner">
+                <div class="section-label" aria-hidden="true">Reserve Your Slot</div>
+                <h2 id="book-heading" class="section-heading">Book Your<br><em>Consultation</em></h2>
+                <p class="section-sub">Experience medicine at its finest — secure your appointment at BM Multi
+                    Speciality Hospital</p>
+
+                <div class="booking-split">
+                    <!-- Left: Why choose us -->
+                    <div class="booking-left" data-animate="fade-right">
+                        <h3 class="booking-left-title">Why Choose BM Hospital?</h3>
+                        <ul class="booking-benefits" role="list">
+                            <li>
+                                <div class="benefit-icon" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                        <polyline points="9 22 9 12 15 12 15 22" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <strong>NABH Accredited</strong>
+                                    <p>Internationally recognized quality standards</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="benefit-icon" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 16 14" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <strong>24/7 Emergency Care</strong>
+                                    <p>Round-the-clock critical care specialists on call</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="benefit-icon" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <strong>Patient-First Philosophy</strong>
+                                    <p>Compassionate care tailored to each individual</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="benefit-icon" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <rect x="2" y="3" width="20" height="14" rx="2" />
+                                        <line x1="8" y1="21" x2="16" y2="21" />
+                                        <line x1="12" y1="17" x2="12" y2="21" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <strong>Advanced Diagnostics</strong>
+                                    <p>AI-powered imaging, robotics &amp; precision medicine</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="benefit-icon" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <line x1="12" y1="1" x2="12" y2="23" />
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <strong>Cashless Insurance</strong>
+                                    <p>All major TPA &amp; insurance plans accepted</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="benefit-icon" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                        <circle cx="9" cy="7" r="4" />
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <strong>35+ Specialists</strong>
+                                    <p>International faculty with subspecialty expertise</p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="booking-contact-bar">
+                            <div class="contact-item">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <path
+                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.78a16 16 0 0 0 6.29 6.29l.94-.94a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                </svg>
+                                +91 44-2600-1234
+                            </div>
+                            <div class="contact-item">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                    <polyline points="22,6 12,13 2,6" />
+                                </svg>
+                                appointments@bmhospital.in
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Form -->
+                    <div class="booking-right" data-animate="fade-left">
+                        <div class="lux-card booking-form-card">
+                            <div class="booking-form-header">
+                                <h3>Patient Registration &amp; Booking</h3>
+                                <p>All fields marked * are required</p>
+                            </div>
+                            <form id="booking-form" novalidate>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="f-name">Patient Full Name *</label>
+                                        <input type="text" id="f-name" name="name" class="lux-input"
+                                            placeholder="e.g. Arjun Mehta" required autocomplete="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="f-email">Email Address *</label>
+                                        <input type="email" id="f-email" name="email" class="lux-input"
+                                            placeholder="arjun@example.com" required autocomplete="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="f-phone">Phone Number *</label>
+                                        <input type="tel" id="f-phone" name="phone" class="lux-input"
+                                            placeholder="+91 98765 43210" required autocomplete="tel">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="f-gender">Gender *</label>
+                                        <select id="f-gender" name="gender" class="lux-input" required>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="f-age">Age (Years) *</label>
+                                        <input type="number" id="f-age" name="age" class="lux-input" min="1" max="120"
+                                            placeholder="30" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="f-dept">Department *</label>
+                                        <select id="f-dept" name="department" class="lux-input" required>
+                                            <!-- Loaded dynamically -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="f-doctor">Consulting Doctor *</label>
+                                        <select id="f-doctor" name="doctor_id" class="lux-input" required>
+                                            <!-- Loaded dynamically -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="f-date">Preferred Date *</label>
+                                        <input type="date" id="f-date" name="appointment_date" class="lux-input"
+                                            required>
+                                    </div>
+                                    <div class="form-group full-col">
+                                        <label for="f-slot">Doctor's Exact Time Slot *</label>
+                                        <select id="f-slot" name="appointment_time" class="lux-input" required>
+                                            <option value="">Select Time Slot (Select Doctor First)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group full-col">
+                                        <div class="symptoms-header">
+                                            <label for="f-reason" style="margin:0;">Reason / Symptoms</label>
+                                            <button type="button" id="btn-ai-symptoms" class="btn-ai-enhance"
+                                                aria-label="Enhance symptoms with AI">
+                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                    <polygon
+                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                                </svg>
+                                                Enhance with AI
+                                            </button>
+                                        </div>
+                                        <textarea id="f-reason" name="reason" class="lux-input lux-textarea" rows="3"
+                                            placeholder="Describe your symptoms or reason for visit…"
+                                            aria-label="Reason or symptoms"></textarea>
+                                        <!-- AI ENHANCE TOOLBAR — preserved -->
+                                        <div id="ai-enhance-bar" class="ai-enhance-toolbar" role="alert"
+                                            aria-live="polite">
+                                            <span id="ai-enhance-msg">✨ Symptoms rewritten with medical terminology.
+                                                Please confirm:</span>
+                                            <div class="ai-toolbar-actions">
+                                                <button type="button" id="btn-ai-confirm" class="btn-confirm">✓
+                                                    Confirm</button>
+                                                <button type="button" id="btn-ai-rollback" class="btn-rollback">↩
+                                                    Revert</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group full-col">
+                                        <button type="submit" id="book-submit-btn" class="btn-primary btn-full">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                <rect x="3" y="4" width="18" height="18" rx="2" />
+                                                <line x1="16" y1="2" x2="16" y2="6" />
+                                                <line x1="8" y1="2" x2="8" y2="6" />
+                                                <line x1="3" y1="10" x2="21" y2="10" />
+                                            </svg>
+                                            Confirm &amp; Verify OTP
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ══════════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════════ -->
+    <footer class="lux-footer" role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="footer-logo-ring">
+                    <img src="/assets/logo.png" alt="BM Hospital" class="footer-logo-img">
+                </div>
+                <div>
+                    <div class="footer-name">BM Multi Speciality Hospital</div>
+                    <div class="footer-tagline">Care Beyond Boundaries</div>
+                </div>
+            </div>
+            <div class="footer-copy">
+                <p>© 2026 BM Multi Speciality Hospital. All rights reserved.</p>
+                <p>42, Anna Salai, Near Gemini Flyover, Chennai · +91 44-2600-1234</p>
+                <p style="font-size:0.75rem; opacity:0.7; margin-top:4px;">Medical icons from <a href="https://github.com/microsoft/fluentui-emoji" target="_blank" rel="noopener" style="text-decoration:underline; color:inherit;">Microsoft Fluent UI Emoji</a> (MIT License)</p>
+            </div>
+            <a href="/admin" target="_blank" rel="noopener" class="footer-admin-link" aria-label="Staff admin portal">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                Staff Portal
+            </a>
+        </div>
+    </footer>
+
+    <!-- ══════════════════════════════════════════════
+     OTP MODAL — Preserved IDs
+     ══════════════════════════════════════════════ -->
+    <div id="otp-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="otp-modal-title">
+        <div class="lux-card modal-card">
+            <div class="modal-icon-ring" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="5" y="11" width="14" height="10" rx="2" />
+                    <path d="M8 11V7a4 4 0 1 1 8 0v4" />
+                    <circle cx="12" cy="16" r="1" fill="currentColor" />
+                </svg>
+            </div>
+            <h2 id="otp-modal-title" class="modal-heading">Verify Your Identity</h2>
+            <p class="modal-sub">A 6-digit verification code was sent to<br><strong id="modal-email-display"
+                    class="modal-email"></strong></p>
+            <div class="otp-inputs" role="group" aria-label="Enter OTP digits">
+                <input type="text" maxlength="1" class="lux-input otp-digit" aria-label="OTP digit 1"
+                    inputmode="numeric">
+                <input type="text" maxlength="1" class="lux-input otp-digit" aria-label="OTP digit 2"
+                    inputmode="numeric">
+                <input type="text" maxlength="1" class="lux-input otp-digit" aria-label="OTP digit 3"
+                    inputmode="numeric">
+                <input type="text" maxlength="1" class="lux-input otp-digit" aria-label="OTP digit 4"
+                    inputmode="numeric">
+                <input type="text" maxlength="1" class="lux-input otp-digit" aria-label="OTP digit 5"
+                    inputmode="numeric">
+                <input type="text" maxlength="1" class="lux-input otp-digit" aria-label="OTP digit 6"
+                    inputmode="numeric">
+            </div>
+            <div id="otp-error"
+                style="color: #ef4444; font-size: 0.9rem; margin: -10px 0 15px; display: none; text-align: center;">
+            </div>
+            <button id="verify-otp-btn" class="btn-primary btn-full">Verify &amp; Confirm Appointment</button>
+            <p class="modal-timer-note">Code expires in 10 minutes. Check your inbox &amp; spam.</p>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+     SUCCESS SLIP MODAL — Preserved IDs
+     ══════════════════════════════════════════════ -->
+    <div id="success-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-heading-text" onclick="if(event.target===this) window.closeSuccessModal()">
+        <div class="lux-card modal-card success-modal-card">
+            <div class="success-glow-ring" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+            </div>
+            <h2 id="modal-heading-text" class="modal-heading" style="color: var(--gold);">Appointment Confirmed</h2>
+
+            <!-- One-shot mail send animation (no loop) -->
+            <div class="mail-send-indicator" id="mail-send-indicator" aria-hidden="true">
+                <div class="mail-envelope" id="mail-envelope">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </div>
+                <span class="mail-status-text">Confirmation dispatched to your inbox</span>
+            </div>
+
+            <p class="modal-sub" style="display:none;" id="modal-sub-text">Your booking slip has been sent to your email with a PDF attachment.</p>
+
+            <div class="appointment-slip-box" role="region" aria-label="Appointment details">
+                <div class="slip-row"><span class="slip-key">Appointment ID</span><span id="s-id"
+                        class="slip-val gold-val"></span></div>
+                <div class="slip-row"><span class="slip-key">Patient Name</span><span id="s-name"
+                        class="slip-val"></span></div>
+                <div class="slip-row"><span class="slip-key">Patient Email</span><span id="s-email"
+                        class="slip-val"></span></div>
+                <div class="slip-row"><span class="slip-key">Department</span><span id="s-dept" class="slip-val"></span>
+                </div>
+                <div class="slip-row"><span class="slip-key">Consulting Doctor</span><span id="s-doc"
+                        class="slip-val"></span></div>
+                <div class="slip-row"><span class="slip-key">Date &amp; Time</span><span id="s-time"
+                        class="slip-val gold-val"></span></div>
+                <div class="slip-row slip-row-reason"><span class="slip-key">Reason / Symptoms</span><span id="s-reason"
+                        class="slip-val slip-val-reason"></span></div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="download-pdf-btn" class="btn-primary">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Download PDF Slip
+                </button>
+                <button id="close-success-btn" class="btn-secondary" onclick="window.closeSuccessModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+     DOCTOR DETAIL MODAL
+     ══════════════════════════════════════════════ -->
+    <div id="doctor-detail-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="doctor-modal-name" onclick="if(event.target===this) window.closeDoctorModal()">
+        <div class="lux-card doctor-modal-card">
+            <button id="close-doctor-modal-btn" class="doctor-modal-close" aria-label="Close doctor profile" onclick="window.closeDoctorModal()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div class="doctor-modal-hero">
+                <img id="dm-photo" class="doctor-modal-photo" src="" alt="Doctor photo" onerror="this.style.display='none'; document.getElementById('dm-initials').style.display='flex';">
+                <div id="dm-initials" class="doctor-modal-initials" style="display:none;"></div>
+                <div class="doctor-modal-info">
+                    <h2 id="dm-name" class="doctor-modal-name"></h2>
+                    <p id="dm-designation" class="doctor-modal-designation"></p>
+                    <p id="dm-dept" class="doctor-modal-dept"></p>
+                </div>
+            </div>
+            <p id="dm-qual" class="doctor-modal-qual"></p>
+            <div class="doctor-stats-grid">
+                <div class="stat-box">
+                    <span id="dm-patients" class="stat-number-val"></span>
+                    <span class="stat-label-val">Patients Treated</span>
+                </div>
+                <div class="stat-box">
+                    <span id="dm-rate" class="stat-number-val"></span>
+                    <span class="stat-label-val">Success Rate</span>
+                </div>
+                <div class="stat-box">
+                    <span id="dm-exp" class="stat-number-val"></span>
+                    <span class="stat-label-val">Years Experience</span>
+                </div>
+                <div class="stat-box">
+                    <span id="dm-award" class="stat-number-val stat-award"></span>
+                    <span class="stat-label-val">Recognition</span>
+                </div>
+            </div>
+            <button id="dm-book-btn" class="btn-primary" style="width:100%; margin-top:1.2rem;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:text-bottom;margin-right:4px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+                Book Consultation
+            </button>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+     MISMATCH POPUP — Preserved IDs
+     ══════════════════════════════════════════════ -->
+    <div id="mismatch-popup" class="modal-overlay" role="alertdialog" aria-modal="true"
+        aria-labelledby="mismatch-title">
+        <div class="lux-card modal-card mismatch-card">
+            <div class="mismatch-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path
+                        d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+            </div>
+            <h3 id="mismatch-title" class="modal-heading">Department Updated</h3>
+            <p class="modal-sub" id="mismatch-detail"></p>
+            <button id="close-mismatch-btn" class="btn-primary btn-full">Understood, Continue</button>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+     BM CARE ASSISTANT — AI CHAT WIDGET
+     ══════════════════════════════════════════════ -->
+    <div class="ai-widget" role="complementary" aria-label="BM Care Assistant">
+        <button id="ai-toggle-btn" class="ai-toggle-btn" aria-label="Open BM Care Assistant" aria-expanded="false">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                aria-hidden="true">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            <span class="ai-btn-pulse" aria-hidden="true"></span>
+        </button>
+        <div id="ai-chat-box" class="lux-card ai-chat-panel" role="dialog" aria-label="BM Care Assistant chat"
+            aria-hidden="true">
+            <div class="chat-header">
+                <div class="chat-header-left">
+                    <div class="chat-avatar" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="chat-name">BM Care Assistant</div>
+                        <div class="chat-status">
+                            <span class="chat-online-dot" aria-hidden="true"></span>
+                            Powered by AI · Online
+                        </div>
+                    </div>
+                </div>
+                <button id="ai-close-btn" class="chat-close-btn" aria-label="Close assistant">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        aria-hidden="true">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div id="chat-messages" class="chat-messages" role="log" aria-live="polite" aria-label="Chat conversation">
+                <div class="chat-msg bot">
+                    <p><strong>Welcome to BM Multi Speciality Hospital.</strong></p>
+                    <p>I am your AI Health Assistant. Describe your symptoms and I will recommend the right department,
+                        specialist, and available time slots.</p>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="ai-input" class="lux-input"
+                    placeholder="e.g. I have chest pain and shortness of breath…"
+                    aria-label="Type your symptoms or health query">
+                <button id="ai-send-btn" class="ai-send-btn" aria-label="Send message">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        aria-hidden="true">
+                        <line x1="22" y1="2" x2="11" y2="13" />
+                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/animations.js" defer></script>
+    <script src="/app.js" defer></script>
+</body>
+
+</html>
