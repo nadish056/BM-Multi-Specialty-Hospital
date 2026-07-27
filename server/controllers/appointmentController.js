@@ -53,7 +53,7 @@ exports.requestOTP = async (req, res) => {
                 res.json({ message: 'OTP sent to your email address successfully.' });
             } catch (emailErr) {
                 console.error('Failed to send OTP email:', emailErr);
-                res.status(500).json({ error: 'Failed to send OTP email. Please verify your email.' });
+                res.status(500).json({ error: `Failed to send OTP email: ${emailErr.message || 'Unknown error'}` });
             }
         });
     });

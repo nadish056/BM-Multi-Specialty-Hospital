@@ -1,21 +1,15 @@
 const nodemailer = require('nodemailer');
 const { generateAppointmentPDF } = require('../utils/pdfGenerator');
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
-
-transporter.verify((error) => {
-    if (error) {
-        console.error('Nodemailer connection error:', error.message);
-    } else {
-        console.log('Nodemailer is ready to send emails.');
-    }
-});
+function getTransporter() {
+    return nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: (process.env.EMAIL_USER || '').trim(),
+            pass: (process.env.EMAIL_PASS || '').trim()
+        }
+    });
+}
 
 /* ───── SHARED EMAIL WRAPPER ────────────────────────────────────── */
 const headerHtml = `
@@ -78,8 +72,8 @@ async function sendOTPEmail(toEmail, otp) {
         If you did not request this, please ignore this email or contact us immediately.
       </p>`;
 
-    return transporter.sendMail({
-        from: `"BM Hospital" <${process.env.EMAIL_USER}>`,
+    return getTransporter().sendMail({
+        from: `"BM Hospital" <${(process.env.EMAIL_USER || '').trim()}>`,
         to: toEmail,
         subject: '🔐 Your OTP Code - BM Hospital Appointment',
         html: emailWrapper(body)
@@ -165,8 +159,8 @@ async function sendBookingConfirmation({ email, name, appointment_id, doctor, de
         // Continue sending email without attachment rather than failing entirely
     }
 
-    return transporter.sendMail({
-        from: `"BM Hospital" <${process.env.EMAIL_USER}>`,
+    return getTransporter().sendMail({
+        from: `"BM Hospital" <${(process.env.EMAIL_USER || '').trim()}>`,
         to: email,
         subject: `✅ Appointment Confirmed [${appointment_id}] - BM Hospital`,
         html: emailWrapper(body),
