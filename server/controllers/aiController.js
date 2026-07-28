@@ -139,6 +139,7 @@ exports.enhanceSymptoms = async (req, res) => {
         return "Patient Reported Symptoms:\n" + lines.map(l => `• ${l.charAt(0).toUpperCase() + l.slice(1)}`).join('\n');
     };
 
+    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
         return res.json({ enhanced_text: fallbackFormat(raw_symptoms) });
     }
