@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Server-side PDF generator for appointment slips.
  * Uses PDFKit to produce a Buffer attached to confirmation emails.
  */
@@ -48,20 +48,37 @@ function generateAppointmentPDF(data) {
             ['Attending Doctor',  data.doctor    || ''],
             ['Date',              data.date      || ''],
             ['Time Slot',         data.time      || ''],
-            ['Reason / Symptoms', (data.reason   || 'General Consultation').slice(0, 70)]
+            ['Reason / Symptoms', data.reason    || 'General Consultation']  // No truncation
         ];
 
-        doc.roundedRect(LEFT, 168, RIGHT_EDGE - LEFT, rows.length * 29 + 4, 6)
+        const VALUE_WIDTH = RIGHT_EDGE - LEFT - 167;
+        const CELL_PADDING = 18; // top+bottom
+        const MIN_ROW_H = 29;
+
+        // Pre-calculate actual rendered heights for each row value
+        const computedRows = rows.map(([label, value]) => {
+            const h = doc.font('Helvetica-Bold').fontSize(10)
+                        .heightOfString(String(value), { width: VALUE_WIDTH });
+            return { label, value, rowH: Math.max(MIN_ROW_H, h + CELL_PADDING) };
+        });
+
+        const totalBoxH = computedRows.reduce((s, r) => s + r.rowH, 0) + 4;
+
+        doc.roundedRect(LEFT, 168, RIGHT_EDGE - LEFT, totalBoxH, 6)
            .strokeColor(TEAL).lineWidth(1.5).stroke();
 
         let y = 178;
-        rows.forEach(([label, value], idx) => {
-            doc.rect(LEFT + 1, y, RIGHT_EDGE - LEFT - 2, 28).fill(idx % 2 === 0 ? '#f8fafc' : '#ffffff');
-            doc.fillColor(MUTED).font('Helvetica').fontSize(9).text(label, LEFT + 12, y + 9, { width: 130 });
-            doc.fillColor(DARK).font('Helvetica-Bold').fontSize(10).text(String(value), LEFT + 155, y + 8, { width: RIGHT_EDGE - LEFT - 167 });
-            y += 29;
+        computedRows.forEach(({ label, value, rowH }, idx) => {
+            doc.rect(LEFT + 1, y, RIGHT_EDGE - LEFT - 2, rowH - 1)
+               .fill(idx % 2 === 0 ? '#f8fafc' : '#ffffff');
+            doc.fillColor(MUTED).font('Helvetica').fontSize(9)
+               .text(label, LEFT + 12, y + 9, { width: 130 });
+            doc.fillColor(DARK).font('Helvetica-Bold').fontSize(10)
+               .text(String(value), LEFT + 155, y + 8, { width: VALUE_WIDTH });
+            y += rowH;
         });
-        doc.roundedRect(LEFT, 168, RIGHT_EDGE - LEFT, rows.length * 29 + 4, 6)
+        // Re-draw border on top of fill so it stays crisp
+        doc.roundedRect(LEFT, 168, RIGHT_EDGE - LEFT, totalBoxH, 6)
            .strokeColor(TEAL).lineWidth(1.5).stroke();
 
         // Instructions
