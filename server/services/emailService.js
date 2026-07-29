@@ -3,17 +3,18 @@ const { generateAppointmentPDF } = require('../utils/pdfGenerator');
 
 function getTransporter() {
     return nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,       // false = STARTTLS (port 587). Render blocks port 465 (SSL).
+        requireTLS: true,    // force TLS upgrade after connection
         auth: {
             user: (process.env.EMAIL_USER || '').trim(),
             pass: (process.env.EMAIL_PASS || '').trim()
         },
-        // Explicit timeouts — prevents silent SMTP hang on Render (causes 502).
-        // With these, a blocked SMTP connection fails fast with a catchable error.
-        connectionTimeout: 10000,  // 10s to establish TCP connection
-        greetingTimeout:   10000,  // 10s for SMTP greeting after connect
-        socketTimeout:     15000,  // 15s for any subsequent socket inactivity
-        pool: false                // no connection pooling — each mail gets fresh socket
+        connectionTimeout: 10000,
+        greetingTimeout:   10000,
+        socketTimeout:     15000,
+        pool: false
     });
 }
 
