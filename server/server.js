@@ -10,7 +10,7 @@ const db = require('./database/init');
 const app = express();
 
 // Trust proxy for reverse proxies (Render, Heroku, Nginx)
-app.set('trust proxy', true);
+app.set('trust proxy', 1);
 
 // Security Middlewares
 app.use(helmet({
