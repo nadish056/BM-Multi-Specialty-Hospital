@@ -122,6 +122,8 @@ If recommending a specific doctor or department, include an action tag at the ve
         let fallbackMsg = "I apologize, but our AI medical service is experiencing a temporary connection issue. Please contact reception at +91 44-2600-1234 or book directly using the form below.";
         if (lastError && (lastError.code === 429 || lastError.status === 'RESOURCE_EXHAUSTED')) {
             fallbackMsg = "⚠️ AI Assistant Notice: Gemini API quota exhausted for current key. Please update GEMINI_API_KEY in .env. You can still book your appointment directly below!";
+        } else if (lastError) {
+            fallbackMsg += ` [DEBUG INFO: ${lastError.message || JSON.stringify(lastError)}]`;
         }
         return res.json({ response: fallbackMsg });
     });
