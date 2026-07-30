@@ -3,12 +3,20 @@ const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 
-const dbPath = path.join(__dirname, '../../database/hospital.db');
+// Use /tmp directory in Vercel (read-only filesystem workaround)
+const isVercel = process.env.VERCEL === '1' || process.env.VERCEL_ENV;
+const dbPath = isVercel 
+    ? path.join('/tmp', 'hospital.db')
+    : path.join(__dirname, '../../database/hospital.db');
 
-// Ensure database directory exists
+// Ensure database directory exists locally
 const dbDir = path.dirname(dbPath);
-if (!fs.existsSync(dbDir)) {
-    fs.mkdirSync(dbDir, { recursive: true });
+if (!isVercel && !fs.existsSync(dbDir)) {
+    try {
+        fs.mkdirSync(dbDir, { recursive: true });
+    } catch (err) {
+        console.warn('Could not create database directory, it might already exist or is read-only.');
+    }
 }
 
 const db = new sqlite3.Database(dbPath, (err) => {

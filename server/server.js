@@ -18,17 +18,8 @@ app.use(compression());
 
 // Security Middlewares (OWASP)
 app.use(helmet({
-    contentSecurityPolicy: {
-        directives: {
-            defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com"],
-            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-            fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
-            imgSrc: ["'self'", "data:", "blob:", "https:"],
-            connectSrc: ["'self'", "https://generativelanguage.googleapis.com"]
-        }
-    },
-    crossOriginEmbedderPolicy: false // disabled to allow external fonts/images
+    contentSecurityPolicy: false, // Disabled to allow inline event handlers and external CDNs
+    crossOriginEmbedderPolicy: false
 }));
 app.use(cors({
     origin: '*', // You can restrict this to your specific Vercel domain in production
