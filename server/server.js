@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const helmet = require('helmet');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const compression = require('compression'); // For gzip
@@ -16,11 +15,7 @@ app.set('trust proxy', 1);
 // Gzip Compression for Performance
 app.use(compression());
 
-// Security Middlewares (OWASP)
-app.use(helmet({
-    contentSecurityPolicy: false, // Disabled to allow inline event handlers and external CDNs
-    crossOriginEmbedderPolicy: false
-}));
+// Security Middlewares (OWASP) - Helmet removed for local dev/student project to fix CSP issues
 app.use(cors({
     origin: '*', // You can restrict this to your specific Vercel domain in production
     methods: ['GET', 'POST', 'PUT', 'DELETE'],

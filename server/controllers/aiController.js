@@ -3,6 +3,7 @@ const db = require('../database/init');
 // Only confirmed-supported models on the v1beta endpoint.
 // gemini-1.5-flash and gemini-1.5-pro removed — API returns 404 Unsupported Model.
 const CANDIDATE_MODELS = [
+    'gemini-3.5-flash-lite',
     'gemini-3.6-flash',
     'gemini-1.5-flash',
     'gemini-1.5-flash-latest',
