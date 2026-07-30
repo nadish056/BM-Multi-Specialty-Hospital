@@ -1,10 +1,10 @@
-const CACHE_NAME = 'bm-hospital-v1';
+const CACHE_NAME = 'bm-hospital-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
-  '/styles/main.css',
-  '/scripts/app.js',
-  '/scripts/utils.js',
+  '/styles.css',
+  '/app.js',
+  '/animations.js',
   '/icon-192.png',
   '/icon-512.png',
   '/manifest.json'
