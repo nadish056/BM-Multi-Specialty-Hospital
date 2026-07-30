@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="BM Multi Speciality Hospital" width="120" />
+  <img src="./client/assets/logo.png" alt="BM Multi Speciality Hospital" width="120" />
   <h1>BM Multi-Speciality Hospital System</h1>
   <p><strong>Elite Healthcare Application with AI-Assisted Booking & PWA Capabilities</strong></p>
 </div>
