@@ -115,19 +115,23 @@ exports.verifyOTPAndBook = async (req, res) => {
                                 }
 
                                 let doctorName = 'Assigned Specialist';
-                                db.get(`SELECT name FROM doctors WHERE id = ?`, [doctor_id], (dErr, docRow) => {
+                                db.get(`SELECT name FROM doctors WHERE id = ?`, [doctor_id], async (dErr, docRow) => {
                                     if (docRow) doctorName = docRow.name;
 
-                                    sendBookingConfirmation({
-                                        email,
-                                        name,
-                                        appointment_id: appointmentId,
-                                        doctor: doctorName,
-                                        department,
-                                        date: appointment_date,
-                                        time: appointment_time,
-                                        reason: reason || ''
-                                    }).catch(e => console.error('Email error:', e));
+                                    try {
+                                        await sendBookingConfirmation({
+                                            email,
+                                            name,
+                                            appointment_id: appointmentId,
+                                            doctor: doctorName,
+                                            department,
+                                            date: appointment_date,
+                                            time: appointment_time,
+                                            reason: reason || ''
+                                        });
+                                    } catch (e) {
+                                        console.error('Email error:', e);
+                                    }
 
                                     res.json({
                                         success: true,
