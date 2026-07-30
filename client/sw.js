@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bm-hospital-v2';
+const CACHE_NAME = 'bm-hospital-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
