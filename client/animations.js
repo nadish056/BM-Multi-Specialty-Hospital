@@ -4,26 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLoadingScreen();
     initScrollReveal();
     initNumberCounters();
-    initStars();
 });
-
-function initStars() {
-    const stars = document.querySelectorAll('.star');
-    stars.forEach(star => {
-        const size = Math.random() * 3 + 1; // 1px to 4px
-        const top = Math.random() * 100; // 0 to 100vh
-        const left = Math.random() * 100; // 0 to 100vw
-        const delay = Math.random() * 5; // 0s to 5s delay
-        const duration = Math.random() * 3 + 2; // 2s to 5s twinkle duration
-        
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.top = `${top}vh`;
-        star.style.left = `${left}vw`;
-        star.style.animationDuration = `${duration}s`;
-        star.style.animationDelay = `${delay}s`;
-    });
-}
 
 // 0. Loading Screen (GSAP Timeline)
 function initLoadingScreen() {
