@@ -455,6 +455,12 @@ function showMismatchWarning(msg) {
 async function handleBookingSubmit(e) {
     e.preventDefault();
     const form = e.target;
+    
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
     const formData = new FormData(form);
     pendingBookingData = Object.fromEntries(formData.entries());
 
@@ -795,6 +801,7 @@ function setupAIChat() {
     if (toggleBtn && chatBox) {
         const openChat = () => {
             chatBox.style.display = 'flex';
+            chatBox.setAttribute('aria-hidden', 'false');
             if (typeof gsap !== 'undefined') {
                 gsap.fromTo(chatBox,
                     { y: 50, scale: 0.95, opacity: 0 },
@@ -805,6 +812,7 @@ function setupAIChat() {
         };
 
         const closeChat = () => {
+            chatBox.setAttribute('aria-hidden', 'true');
             if (typeof gsap !== 'undefined') {
                 gsap.to(chatBox, {
                     y: 50, scale: 0.95, opacity: 0, duration: 0.3, ease: "power2.in",

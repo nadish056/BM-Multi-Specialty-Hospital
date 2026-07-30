@@ -7,6 +7,13 @@
     <title>BM Multi Speciality Hospital — World-Class Healthcare</title>
     <meta name="description"
         content="BM Multi Speciality Hospital offers premium healthcare across 16+ specialities with 35+ expert doctors. Book your consultation online.">
+    <meta property="og:title" content="BM Multi Speciality Hospital - World-Class Healthcare">
+    <meta property="og:description" content="Premium healthcare across 16+ specialities with 35+ expert doctors.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bm-hospital.vercel.app/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BM Multi Speciality Hospital">
+    <link rel="canonical" href="https://bm-hospital.vercel.app/">
 
     <!-- Favicon & PWA -->
     <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
@@ -47,6 +54,14 @@
                     stroke-linecap="round" stroke-linejoin="round" />
             </svg>
         </div>
+    </div>
+
+    <!-- Live Stars Background -->
+    <div class="stars-container" aria-hidden="true">
+        <!-- Up to 10 stars dynamically styled via JS for random placement -->
+        <div class="star"></div><div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
     </div>
 
     <!-- ══════════════════════════════════════════════
@@ -119,16 +134,13 @@
                         Serving Excellence Since 1998
                     </div>
                     <h1 class="hero-heading">
-                        Advanced Medical Care,<br>
-                        <em class="hero-heading-gold">Closer to You</em>
+                        Advanced Medical Care, <em class="hero-heading-gold">Closer to You</em>
                     </h1>
                     <p class="hero-description">
                         BM Multi Speciality Hospital delivers world-class healthcare across
                         <strong>16+ specialities</strong> with <strong>35+ expert consultants</strong>.
-                        Precision diagnostics. Compassionate care.<br><br>
-                        <em
-                            style="color: var(--gold); font-size: 1.1rem; display: block; margin-top: 0.5rem; letter-spacing: 0.02em;">"You
-                            are in safe hands. We are here for you, don't worry."</em>
+                        Precision diagnostics. Compassionate care.<br>
+                        <em style="color: var(--gold); font-family: 'Imperial Script', cursive; font-size: 2.2rem; display: block; margin-top: 0.5rem; margin-bottom: 1.5rem; letter-spacing: 0.02em; line-height: 1.2;">"You are in safe hands. We are here for you, don't worry."</em>
                     </p>
                     <div class="hero-actions">
                         <a href="#booking" class="btn-primary">
@@ -409,7 +421,7 @@
                                 <h3>Patient Registration &amp; Booking</h3>
                                 <p>All fields marked * are required</p>
                             </div>
-                            <form id="booking-form" novalidate>
+                            <form id="booking-form">
                                 <div class="form-grid">
                                     <div class="form-group">
                                         <label for="f-name">Patient Full Name *</label>
@@ -529,7 +541,12 @@
             <div class="footer-copy">
                 <p>© 2026 BM Multi Speciality Hospital. All rights reserved.</p>
                 <p>42, Anna Salai, Near Gemini Flyover, Chennai · +91 44-2600-1234</p>
-                <p style="font-size:0.75rem; opacity:0.7; margin-top:4px;">Medical icons from <a href="https://github.com/microsoft/fluentui-emoji" target="_blank" rel="noopener" style="text-decoration:underline; color:inherit;">Microsoft Fluent UI Emoji</a> (MIT License)</p>
+                <p style="font-size:0.75rem; opacity:0.7; margin-top:4px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    Student Project Developed by Nadish M — For Educational Purposes Only
+                </p>
             </div>
             <a href="/admin" target="_blank" rel="noopener" class="footer-admin-link" aria-label="Staff admin portal">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -761,6 +778,15 @@
 
     <script src="/animations.js" defer></script>
     <script src="/app.js" defer></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(err => {
+                    console.error('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>

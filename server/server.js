@@ -3,24 +3,42 @@ const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
+const compression = require('compression'); // For gzip
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 const db = require('./database/init');
 
 const app = express();
 
-// Trust proxy for reverse proxies (Render, Heroku, Nginx)
+// Trust proxy for reverse proxies (Render, Heroku, Vercel)
 app.set('trust proxy', 1);
 
-// Security Middlewares
-app.use(helmet({
-    contentSecurityPolicy: false // disabled for simple setup with local static files
-}));
-app.use(cors());
+// Gzip Compression for Performance
+app.use(compression());
 
-// Parse JSON and URL-encoded bodies
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Security Middlewares (OWASP)
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
+            imgSrc: ["'self'", "data:", "blob:", "https:"],
+            connectSrc: ["'self'", "https://generativelanguage.googleapis.com"]
+        }
+    },
+    crossOriginEmbedderPolicy: false // disabled to allow external fonts/images
+}));
+app.use(cors({
+    origin: '*', // You can restrict this to your specific Vercel domain in production
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Parse JSON and URL-encoded bodies with limits (prevent large payloads)
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
 // Global Rate Limiting
 const globalLimiter = rateLimit({
@@ -46,38 +64,51 @@ const otpLimiter = rateLimit({
 });
 app.use('/api/appointments/request-otp', otpLimiter);
 
-// Serve static files (Frontend)
-app.use(express.static(path.join(__dirname, '../client')));
-app.use('/admin', express.static(path.join(__dirname, '../admin')));
+// Serve static files with Cache-Control headers
+const staticOptions = {
+    maxAge: '1d', // Cache static assets for 1 day
+    etag: true
+};
+app.use(express.static(path.join(__dirname, '../client'), staticOptions));
+app.use('/admin', express.static(path.join(__dirname, '../admin'), staticOptions));
 
-// API Routes - standard mounting
+// API Routes
 const apiRouter = express.Router();
 apiRouter.use('/appointments', require('./routes/appointmentRoutes'));
 apiRouter.use('/admin', require('./routes/adminRoutes'));
 apiRouter.use('/ai', require('./routes/aiRoutes'));
 
 app.use('/api', apiRouter);
-// Mount on Netlify's expected path for serverless functions
-app.use('/.netlify/functions/api', apiRouter);
 
-// Fallback for SPA routing
+// Global API Error Handler
+app.use('/api', (err, req, res, next) => {
+    console.error('API Error:', err.message);
+    res.status(err.status || 500).json({ error: 'Internal Server Error' });
+});
+
+// SPA Fallback Routing
 app.use('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, '../admin/index.html'));
 });
 
-// Catch-all route for SPA
 app.use((req, res) => {
     res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
+// Global Application Error Handler
+app.use((err, req, res, next) => {
+    console.error('App Error:', err.message);
+    res.status(500).send('Internal Server Error');
+});
+
 const PORT = process.env.PORT || 5000;
 
-// Start server if run directly (not via serverless)
+// Start server if run directly
 if (require.main === module) {
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
     });
 }
 
-// Export for Netlify serverless wrapper
+// Export for Vercel Serverless Functions
 module.exports = app;

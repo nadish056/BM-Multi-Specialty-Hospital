@@ -20,3 +20,9 @@ logs/
 Thumbs.db
 .vscode/
 .idea/
+
+# Build & Deploy
+dist/
+build/
+.vercel/
+uploads/

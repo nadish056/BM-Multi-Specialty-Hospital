@@ -3,9 +3,11 @@ const db = require('../database/init');
 // Only confirmed-supported models on the v1beta endpoint.
 // gemini-1.5-flash and gemini-1.5-pro removed — API returns 404 Unsupported Model.
 const CANDIDATE_MODELS = [
-    'gemini-2.5-flash-lite', // highest free quota, fastest
-    'gemini-2.0-flash',      // fallback
-    'gemini-2.0-flash-lite'  // last resort
+    'gemini-3.6-flash',
+    'gemini-1.5-flash',
+    'gemini-1.5-flash-latest',
+    'gemini-2.0-flash',
+    'gemini-2.5-flash'
 ];
 
 /**
@@ -76,9 +78,12 @@ If recommending a specific doctor or department, include an action tag at the ve
 
         for (const model of CANDIDATE_MODELS) {
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'x-goog-api-key': apiKey 
+                    },
                     body: JSON.stringify({
                         contents: [
                             {
@@ -159,9 +164,12 @@ Output ONLY the enhanced summary text, nothing else.
 
     for (const model of CANDIDATE_MODELS) {
         try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-goog-api-key': apiKey 
+                },
                 body: JSON.stringify({
                     contents: [{ role: 'user', parts: [{ text: PROMPT }] }]
                 })

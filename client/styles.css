@@ -6,6 +6,13 @@
 /* ── Google Fonts Import ── */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Manrope:wght@300;400;500;600;700;800&display=swap');
 
+@font-face {
+    font-family: 'Imperial Script';
+    src: url('/assets/fonts/ImperialScript-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* ══════════════════════════════════════════════
    1. DESIGN TOKENS
    ══════════════════════════════════════════════ */
@@ -236,7 +243,7 @@ textarea {
 .bg-pattern {
     position: absolute;
     inset: 0;
-    opacity: 0.045;
+    opacity: 0.15;
     background-image:
         repeating-linear-gradient(0deg, transparent, transparent 7px, var(--gold) 7px, var(--gold) 8px),
         repeating-linear-gradient(90deg, transparent, transparent 7px, var(--gold) 7px, var(--gold) 8px);
@@ -253,6 +260,12 @@ textarea {
 body>*:not(.bg-layer):not(.nav-wrapper):not(.modal-overlay):not(.ai-widget) {
     position: relative;
     z-index: 1;
+}
+
+/* Accessibility Focus States */
+:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
 }
 
 
@@ -642,6 +655,16 @@ body>*:not(.bg-layer):not(.nav-wrapper):not(.modal-overlay):not(.ai-widget) {
     max-width: 380px;
     padding: 2.5rem;
     text-align: center;
+    border: 1px solid var(--gold);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4), inset 0 0 20px rgba(212, 175, 55, 0.2);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--r-2xl);
+}
+
+[data-theme="dark"] .hero-card {
+    background: rgba(10, 15, 20, 0.6);
 }
 
 .hero-card-logo-ring {
@@ -651,6 +674,7 @@ body>*:not(.bg-layer):not(.nav-wrapper):not(.modal-overlay):not(.ai-widget) {
     border: 2px solid var(--gold-border);
     padding: 6px;
     margin: 0 auto 1.5rem;
+    animation: heartPulse 2.5s infinite ease-in-out;
     background: linear-gradient(135deg, var(--emerald-700), var(--emerald-600));
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), var(--shadow-gold);
     overflow: hidden;
@@ -991,7 +1015,7 @@ body>*:not(.bg-layer):not(.nav-wrapper):not(.modal-overlay):not(.ai-widget) {
     border: 1px solid var(--card-border);
     box-shadow: var(--shadow-card);
     backdrop-filter: blur(12px);
-    transition: var(--t-normal);
+    transition: all 0.5s ease;
     position: relative;
     overflow: hidden;
 }
@@ -1009,13 +1033,39 @@ body>*:not(.bg-layer):not(.nav-wrapper):not(.modal-overlay):not(.ai-widget) {
 }
 
 .doctor-card:hover {
-    border-color: var(--gold-border);
+    border-color: var(--gold);
     transform: translateY(-4px);
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), var(--shadow-gold);
+    box-shadow: 
+        0 24px 64px rgba(0, 0, 0, 0.55), 
+        0 20px 40px -15px rgba(212, 175, 55, 0.8),
+        inset 0 -15px 30px -15px rgba(212, 175, 55, 0.6);
 }
 
 .doctor-card:hover::before {
     opacity: 1;
+}
+
+.doctor-card::after {
+    content: '';
+    position: absolute;
+    top: -25%;
+    left: -70%;
+    width: 40%;
+    height: 150%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(212, 175, 55, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(-17deg);
+    transition: left 0.5s ease-in-out;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.doctor-card:hover::after {
+    left: 130%;
 }
 
 /* Doctor avatar — initials ring */
@@ -2152,7 +2202,7 @@ select.lux-input option {
 }
 
 [data-theme="light"] .bg-pattern {
-    opacity: 0.045;
+    opacity: 0.15;
     background-image:
         repeating-linear-gradient(0deg, transparent, transparent 7px, rgba(0, 0, 0, 0.6) 7px, rgba(0, 0, 0, 0.6) 8px),
         repeating-linear-gradient(90deg, transparent, transparent 7px, rgba(0, 0, 0, 0.6) 7px, rgba(0, 0, 0, 0.6) 8px);
@@ -2402,6 +2452,8 @@ select.lux-input option {
 .luxury-loader {
     position: fixed;
     inset: 0;
+    width: 100vw;
+    height: 100vh;
     background: var(--emerald-900);
     z-index: 10000;
     display: flex;
@@ -2647,13 +2699,11 @@ select.lux-input option {
 
     /* Card hover lift */
     .clay-card,
-    .doctor-card,
     .dept-card-box {
         transition: transform 200ms ease, box-shadow 200ms ease;
     }
 
     .clay-card:hover,
-    .doctor-card:hover,
     .dept-card-box:hover {
         transform: translateY(-4px);
         box-shadow: var(--shadow-lg), var(--shadow-gold);
@@ -2920,6 +2970,66 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     }
 }
 
+/* ══════════════════════════════════════════════
+   LIVE LOGO ANIMATION (Heartbeat + Glassmorphism)
+   ══════════════════════════════════════════════ */
+@keyframes heartPulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+    15% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+    30% { transform: scale(1); box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+    45% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+    60% { transform: scale(1); box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
 
+.logo-ring {
+    animation: heartPulse 2.5s infinite ease-in-out;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2px;
+}
 
+[data-theme="dark"] .logo-ring {
+    background: rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
 
+/* ══════════════════════════════════════════════
+   LIVE BACKGROUND STARS ANIMATION
+   ══════════════════════════════════════════════ */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0; /* Behind everything */
+    pointer-events: none;
+    overflow: hidden;
+}
+.star {
+    position: absolute;
+    background: var(--gold);
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle linear infinite;
+}
+@keyframes twinkle {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.8; transform: scale(1); box-shadow: 0 0 8px rgba(212, 175, 55, 0.8); }
+    100% { opacity: 0; transform: scale(0.5); }
+}
+
+/* Base state: hide all stars initially */
+.star { display: none; }
+
+/* Show up to 5 stars on Mobile */
+.star:nth-child(-n+5) { display: block; }
+
+/* Show all 10 stars on Desktop */
+@media (min-width: 768px) {
+    .star { display: block; }
+}
